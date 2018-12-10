@@ -6,3 +6,8 @@
 /angularjs.bootstrap.dialog/package-lock.json
 /angularjs.bootstrap.dialog/nginx/logs
 /angularjs.bootstrap.dialog/nginx/temp
+/angularjs.utils/node_modules
+/angularjs.utils/demo/js
+/angularjs.utils/nginx/temp
+/angularjs.utils/nginx/logs
+/angularjs.utils/dist
