@@ -4,3 +4,5 @@
 /angularjs.bootstrap.dialog/dist
 /angularjs.bootstrap.dialog/node_modules
 /angularjs.bootstrap.dialog/package-lock.json
+/angularjs.bootstrap.dialog/nginx/logs
+/angularjs.bootstrap.dialog/nginx/temp
