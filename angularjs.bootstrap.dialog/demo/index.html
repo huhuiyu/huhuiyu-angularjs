@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>angularjs-bootstrap3对话框</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+  </head>
+  <body>
+    <!-- 对话框相关directive -->
+    <div>
+      <alert-dialog></alert-dialog>
+      <wait-dialog></wait-dialog>
+      <custom-dialog></custom-dialog>
+      <confirm-dialog></confirm-dialog>
+    </div>
+
+    <div class="text-center" ng-controller="IndexCtrl">
+      <span class="btn btn-primary" ng-click="showAlert()">信息对话框</span> <span class="btn btn-primary" ng-click="showWait()">等待对话框</span> <span class="btn btn-primary" ng-click="showCustom()">自定义对话框</span> <span class="btn btn-primary" ng-click="showConfirm()">确认对话框</span>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/angularjs.bootstrap.dialog-1.0.0.min.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

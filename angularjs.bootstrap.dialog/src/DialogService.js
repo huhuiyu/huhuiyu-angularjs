@@ -63,7 +63,7 @@
         $log.debug('DialogService.showAlert not init...');
         return;
       }
-      
+
       $timeout(function() {
         alertDialog.closefn = cb || angular.noop;
         alertDialog.scope.alertInfo = info;
@@ -75,7 +75,7 @@
       });
     };
 
-    service.hideAlertDialog = function() {
+    service.hideAlert = function() {
       alertDialog.element.modal('hide');
     };
     /* ========================================================== */
@@ -127,11 +127,11 @@
     var tempConfirmBtnYes = null;
     var tempConfirmBtnNo = null;
 
-    service.setConfirmBtnYes = function(yes) {
+    service.setConfirmYes = function(yes) {
       tempConfirmBtnYes = yes;
     };
 
-    service.setConfirmBtnNo = function(no) {
+    service.setConfirmNo = function(no) {
       tempConfirmBtnNo = no;
     };
 
