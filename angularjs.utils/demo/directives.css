@@ -1,0 +1,21 @@
+.fixed-top {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  background-color: #ff0000;
+  color: #ffffff;
+}
+
+.fixed-buttom {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  background-color: #0000ff;
+  color: #ffffff;
+}
+
+.div-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
