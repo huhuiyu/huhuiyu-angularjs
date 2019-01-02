@@ -11,8 +11,8 @@
   app.controller('MyCtrl', [
     '$scope',
     '$log',
-    'MyUtilService',
-    function ($scope, $log, MyUtilService) {
+    'MyDateService',
+    function ($scope, $log, MyDateService) {
       $log.debug('MyCtrl init...', $scope);
 
       // 处理scope销毁
@@ -20,19 +20,8 @@
         $log.debug('MyCtrl destroy...');
       });
 
-      $scope.demo = {};
+      $scope.date01 = MyDateService.formatDate(new Date().getTime(), 'y-M-d y-M-d h:m:s h:m:s w');
 
-      $scope.md5 = function () {
-        $scope.demo.md5result = MyUtilService.md5($scope.demo.md5data);
-      };
-
-      $scope.trimResult = function () {
-        return MyUtilService.trim($scope.demo.trimData);
-      };
-
-      $scope.isEmpty = function () {
-        return MyUtilService.empty($scope.demo.trimData);
-      };
     }
   ]);
 

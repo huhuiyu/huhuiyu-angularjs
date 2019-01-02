@@ -1,7 +1,7 @@
 /**
  * 日期服务
  */
-(function() {
+(function () {
   var app = angular.module('angularjs.utils');
   // 创建cookie服务
   app.factory('MyDateService', ['$log', MyDateService]);
@@ -13,7 +13,7 @@
     // 服务对象
     var service = {};
 
-    service.formatDate = function(timestamp, format) {
+    service.formatDate = function (timestamp, format) {
       var date = new Date();
       if (timestamp) {
         date.setTime(timestamp);
@@ -33,13 +33,13 @@
       minute = minute < 10 ? '0' + minute : minute + '';
       var seconds = date.getSeconds();
       seconds = seconds < 10 ? '0' + seconds : seconds + '';
-      var result = format.replace('y', year);
-      result = result.replace('M', month);
-      result = result.replace('d', day);
-      result = result.replace('h', hour);
-      result = result.replace('m', minute);
-      result = result.replace('s', seconds);
-      result = result.replace('w', weekNames[date.getDay()]);
+      var result = format.replace(/y/g, year);
+      result = result.replace(/M/g, month);
+      result = result.replace(/d/g, day);
+      result = result.replace(/h/g, hour);
+      result = result.replace(/m/g, minute);
+      result = result.replace(/s/g, seconds);
+      result = result.replace(/w/g, weekNames[date.getDay()]);
       return result;
     };
 
