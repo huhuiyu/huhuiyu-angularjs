@@ -1,5 +1,5 @@
 (function () {
-  var app = angular.module('demo', ['angularjs.utils']);
+  var app = angular.module('demo', ['ngSanitize', 'angularjs.utils']);
 
   app.config([
     '$logProvider',
@@ -33,6 +33,17 @@
       $scope.isEmpty = function () {
         return MyUtilService.empty($scope.demo.trimData);
       };
+
+      $scope.showHtmlData = function () {
+        return MyUtilService.trustAsHtml($scope.htmldata);
+      };
+
+      $scope.isPhone = MyUtilService.isMobile();
+      $scope.browserInfo = MyUtilService.trustAsHtml(MyUtilService.formatJson(MyUtilService.getBrowserInfo(), true));
+
+      $scope.uuid01=MyUtilService.getUuid();
+      $scope.uuid02=MyUtilService.getUuid32();
+
     }
   ]);
 
