@@ -55,7 +55,12 @@
       }).then(
         function (data, status) {
           $log.debug(data, status);
-          (service.after || angular.noop)(data);
+          var after = (service.after || angular.noop)(data);
+          $log.debug('after的返回值：', after);
+          //返回break表示中断流程
+          if (after == 'break') {
+            return;
+          }
           (cb || angular.noop)(data.data);
         },
         function (data, status) {
