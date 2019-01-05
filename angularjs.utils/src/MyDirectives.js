@@ -1,6 +1,39 @@
 (function () {
   var app = angular.module('angularjs.utils');
 
+  app.directive('focusOn', [
+    '$log',
+    function ($log) {
+      $log.debug('directive focus-on...');
+      return {
+        scope: {
+          focusOn: '@'
+        },
+        link: function ($scope, element, attr) {
+          $log.debug('directive focus-on element:', element, attr);
+
+          var watch = $scope.$watch('focusOn', function (nv, ov) {
+            $log.debug('directive focus-on watch:', nv, ov);
+            if (nv == true || nv == 'true') {
+              try {
+                element[0].focus();
+              } catch (e) {
+                $log.debug('directive focus error:', e);
+              }
+            }
+          });
+
+          $scope.$on('$destroy', function () {
+            $log.debug('directive focus-on destroy...');
+            if (!finish) {
+              watch();
+            }
+          });
+        }
+      };
+    }
+  ]);
+
   /**
    * 按照指定给是显示时间戳的指令
    */
