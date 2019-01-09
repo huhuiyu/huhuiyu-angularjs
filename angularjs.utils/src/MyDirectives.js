@@ -25,9 +25,7 @@
 
           $scope.$on('$destroy', function () {
             $log.debug('directive focus-on destroy...');
-            if (!finish) {
-              watch();
-            }
+            watch();
           });
         }
       };
