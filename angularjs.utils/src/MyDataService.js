@@ -4,17 +4,11 @@
 (function () {
   var app = angular.module('angularjs.utils');
 
-  app.factory('MyDataService', [
-    '$log',
-    '$http',
-    MyDataService
-  ]);
+  app.factory('MyDataService', ['$log', '$http', 'MyLocalDataService', MyDataService]);
 
-  function MyDataService(
-    $log,
-    $http
-  ) {
+  function MyDataService($log, $http, MyLocalDataService) {
     $log.info('MyDataService init...');
+    var errorLocalKey = 'error.local.info';
     //默认错误信息
     var errorInfo = {
       success: false,
@@ -149,9 +143,17 @@
         },
         function (data, status) {
           $log.error('处理数据发生错误:', data, status);
+          MyLocalDataService.putJson(errorLocalKey, {
+            data: data,
+            status: status
+          });
           (cb || angular.noop)(errorInfo);
         }
       );
+    };
+
+    service.loadLastError = function () {
+      return MyLocalDataService.getJson(errorLocalKey);
     };
 
     service.get = function (url, cb) {
