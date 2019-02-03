@@ -11,3 +11,4 @@
 /angularjs.utils/nginx/temp
 /angularjs.utils/nginx/logs
 /angularjs.utils/dist
+/angularjs.app/node_modules
