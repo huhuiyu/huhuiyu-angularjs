@@ -41,7 +41,7 @@
               $log.debug('应答发生错误：', rejection);
               if (rejection.config.url.substr(0, 9) == 'templates') {
                 $log.debug('模板页不存在==>', rejection.config.url);
-                $location.path('/'); // 找不到模板转到首页，也可以跳转到统一的404错误页
+                $location.path('/route/page/404'); // 找不到模板转到首页，也可以跳转到统一的404错误页
               }
               return $q.reject(rejection);
             }
