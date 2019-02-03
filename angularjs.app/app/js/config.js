@@ -6,7 +6,7 @@
     services: 'services',
     controllers: 'controllers',
     directives: 'directives',
-    dataservice: 'https://127.0.0.1:20000',
+    dataservice: 'http://127.0.0.1:20000',
     debug: true
   };
 

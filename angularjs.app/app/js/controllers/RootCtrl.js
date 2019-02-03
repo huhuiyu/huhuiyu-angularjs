@@ -1,14 +1,16 @@
 (function() {
   var ctrls = angular.module(MyAppConfig.controllers);
-  ctrls.controller('RootCtrl', ['$rootScope', '$scope', '$log', '$location', RootCtrl]);
+  ctrls.controller('RootCtrl', ['$rootScope', '$scope', '$log', '$location', 'ToolService', RootCtrl]);
 
-  function RootCtrl($rootScope, $scope, $log, $location) {
+  function RootCtrl($rootScope, $scope, $log, $location, ToolService) {
     $log.debug('RootCtrl init...', $location.path());
 
     // 处理scope销毁
     $scope.$on('$destroy', function() {
       $log.debug('RootCtrl destroy...');
     });
+
+    ToolService.initDataService();
 
     // 监听视图切换
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
