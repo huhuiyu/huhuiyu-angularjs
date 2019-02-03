@@ -1,0 +1,21 @@
+{
+  "common": {
+    "nodemodules": "node_modules/",
+    "lib": "lib/",
+    "libhuhuiyu": "lib/huhuiyu/"
+  },
+  "app": {
+    "src": "app/",
+    "dist": "dist/app/",
+    "js": "app/js/",
+    "css": "app/css/",
+    "html": "app/html/",
+    "templates": "app/html/templates/",
+    "images": "app/images/",
+    "distjs": "dist/app/js/",
+    "distcss": "dist/app/css/",
+    "disttemplates": "dist/app/templates/",
+    "distimages": "dist/app/images/",
+    "distfonts": "dist/app/fonts/"
+  }
+}

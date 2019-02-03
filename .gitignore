@@ -12,3 +12,8 @@
 /angularjs.utils/nginx/logs
 /angularjs.utils/dist
 /angularjs.app/node_modules
+angularjs.app/dist/
+angularjs.app/nginx/logs/
+angularjs.app/nginx-path.bat
+angularjs.app/browser.js
+angularjs.app/nginx/temp/
