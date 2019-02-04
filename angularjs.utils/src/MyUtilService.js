@@ -1,39 +1,39 @@
 /**
  * 工具类服务
  */
-(function () {
+(function() {
   var app = angular.module('angularjs.utils');
   // 创建cookie服务
-  app.factory('MyUtilService', ['$log', '$sce', MyUtilService]);
+  app.factory('MyUtilService', ['$log', '$sce', '$location', '$timeout', MyUtilService]);
 
-  function MyUtilService($log, $sce) {
+  function MyUtilService($log, $sce, $location, $timeout) {
     $log.info('MyUtilService init...');
     // 服务对象
     var service = {};
     // 字符串去空
-    service.trim = function (str) {
+    service.trim = function(str) {
       if (service.empty(str)) {
         return '';
       }
       return str.replace(/(^[\s]*)|([\s]*$)/g, '');
     };
     // 是否为空字符串
-    service.empty = function (str) {
+    service.empty = function(str) {
       return !str || str.length === 0;
     };
 
     // 是否为整数
-    service.isInt = function (str) {
+    service.isInt = function(str) {
       return /^\d+$/.test(str) && parseInt(str, 10) + '' === str;
     };
 
     // 替换字符串
-    service.replaceAll = function (str, ostr, dstr) {
+    service.replaceAll = function(str, ostr, dstr) {
       return str.split(ostr).join(dstr);
     };
 
     // 获取uuid
-    service.getUuid = function () {
+    service.getUuid = function() {
       var s = [];
       var hexDigits = '0123456789abcdef';
       for (var i = 0; i < 36; i++) {
@@ -47,23 +47,23 @@
     };
 
     //获取32位uuid
-    service.getUuid32 = function () {
+    service.getUuid32 = function() {
       return service.replaceAll(service.getUuid(), '-', '');
     };
 
     // 跳转到路由页面
-    service.redirect = function (path, search) {
+    service.redirect = function(path, search) {
       if (!search) {
         search = {};
       }
       $location.search(search);
-      $timeout(function () {
+      $timeout(function() {
         $location.path(path);
       });
     };
 
     // json转换成deeplink
-    service.jsonToDeeplink = function (objJson) {
+    service.jsonToDeeplink = function(objJson) {
       var deeplink = '';
       for (var p in objJson) {
         deeplink += '&' + p + '=' + objJson[p];
@@ -72,7 +72,7 @@
     };
 
     // 替换换行为br标记，且标记info为可以输出html标记
-    service.trustAsHtml = function (info, replaceBr) {
+    service.trustAsHtml = function(info, replaceBr) {
       if (replaceBr) {
         info = info.replace(/\r\n/g, '<br />'); // 替换\r\n为<br />
         info = info.replace(/\r/g, '<br />'); // 替换\r为<br />
@@ -82,14 +82,14 @@
     };
 
     // 是否为手机浏览器
-    service.isMobile = function () {
+    service.isMobile = function() {
       return service.getBrowserInfo().versions.mobile;
     };
 
     // 获取浏览器信息
-    service.getBrowserInfo = function () {
+    service.getBrowserInfo = function() {
       var browserInfo = {
-        versions: (function () {
+        versions: (function() {
           var u = navigator.userAgent;
           var info = {
             trident: u.indexOf('Trident') > -1, // IE内核
@@ -111,8 +111,8 @@
     };
 
     // 滚动到id元素
-    service.scrollTo = function (eleId) {
-      $timeout(function () {
+    service.scrollTo = function(eleId) {
+      $timeout(function() {
         var oldHash = $location.hash();
         $location.hash(eleId);
         $anchorScroll();
@@ -129,7 +129,7 @@
       other: 'color: maroon;'
     };
 
-    service.formatJson = function (json, highlight) {
+    service.formatJson = function(json, highlight) {
       // 缩进显示json字符串
       var result = JSON.stringify(json, undefined, 4);
       if (highlight) {
@@ -138,14 +138,14 @@
       return result;
     };
 
-    service.jsonSyntaxHighlight = function (json) {
+    service.jsonSyntaxHighlight = function(json) {
       // 格式化显示json
       // json语法高亮
       json = json
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
-      json = json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+      json = json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
         var style = 'number';
         if (/^"/.test(match)) {
           if (/:$/.test(match)) {
@@ -166,7 +166,7 @@
     // MD5加密类
     function MD5Encoder() {}
 
-    MD5Encoder.rhex = function (num) {
+    MD5Encoder.rhex = function(num) {
       var hex_chr = '0123456789abcdef';
       str = '';
       for (j = 0; j <= 3; j++) {
@@ -175,7 +175,7 @@
       return str;
     };
 
-    MD5Encoder.str2blks_MD5 = function (str) {
+    MD5Encoder.str2blks_MD5 = function(str) {
       nblk = ((str.length + 8) >> 6) + 1;
       blks = new Array(nblk * 16);
       for (i = 0; i < nblk * 16; i++) blks[i] = 0;
@@ -187,36 +187,36 @@
       return blks;
     };
 
-    MD5Encoder.add = function (x, y) {
+    MD5Encoder.add = function(x, y) {
       var lsw = (x & 0xffff) + (y & 0xffff);
       var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
       return (msw << 16) | (lsw & 0xffff);
     };
 
-    MD5Encoder.rol = function (num, cnt) {
+    MD5Encoder.rol = function(num, cnt) {
       return (num << cnt) | (num >>> (32 - cnt));
     };
 
-    MD5Encoder.cmn = function (q, a, b, x, s, t) {
+    MD5Encoder.cmn = function(q, a, b, x, s, t) {
       return MD5Encoder.add(MD5Encoder.rol(MD5Encoder.add(MD5Encoder.add(a, q), MD5Encoder.add(x, t)), s), b);
     };
-    MD5Encoder.ff = function (a, b, c, d, x, s, t) {
+    MD5Encoder.ff = function(a, b, c, d, x, s, t) {
       return MD5Encoder.cmn((b & c) | (~b & d), a, b, x, s, t);
     };
-    MD5Encoder.gg = function (a, b, c, d, x, s, t) {
+    MD5Encoder.gg = function(a, b, c, d, x, s, t) {
       return MD5Encoder.cmn((b & d) | (c & ~d), a, b, x, s, t);
     };
-    MD5Encoder.hh = function (a, b, c, d, x, s, t) {
+    MD5Encoder.hh = function(a, b, c, d, x, s, t) {
       return MD5Encoder.cmn(b ^ c ^ d, a, b, x, s, t);
     };
-    MD5Encoder.ii = function (a, b, c, d, x, s, t) {
+    MD5Encoder.ii = function(a, b, c, d, x, s, t) {
       return MD5Encoder.cmn(c ^ (b | ~d), a, b, x, s, t);
     };
 
     /*
      * Take a string and return the hex representation of its MD5.
      */
-    MD5Encoder.calcMD5 = function (str) {
+    MD5Encoder.calcMD5 = function(str) {
       x = MD5Encoder.str2blks_MD5(str);
       a = 1732584193;
       b = -271733879;
@@ -305,7 +305,7 @@
       return MD5Encoder.rhex(a) + MD5Encoder.rhex(b) + MD5Encoder.rhex(c) + MD5Encoder.rhex(d);
     };
 
-    service.md5 = function (str) {
+    service.md5 = function(str) {
       return MD5Encoder.calcMD5(str);
     };
 
