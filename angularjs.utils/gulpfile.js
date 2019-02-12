@@ -64,7 +64,7 @@ gulp.task('jsmin', function () {
     .pipe(gulp.dest(distDir));
 });
 
-gulp.task('demo', ['jsmin'], function () {
+gulp.task('demo', ['clean','jsmin'], function () {
   //第三方库
   del.sync([demoJsDir + '**/*'], {
     force: true

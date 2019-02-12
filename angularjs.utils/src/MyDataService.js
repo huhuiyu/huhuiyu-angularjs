@@ -1,7 +1,7 @@
 /**
  * 数据服务
  */
-(function () {
+(function() {
   var app = angular.module('angularjs.utils');
 
   app.factory('MyDataService', ['$log', '$http', 'MyLocalDataService', MyDataService]);
@@ -24,12 +24,13 @@
       afterFile: angular.noop
     };
 
-    service.isJson = function (obj) {
-      return obj && typeof (obj) == "object" && Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
+    //是否为json
+    service.isJson = function(obj) {
+      return obj && typeof obj == 'object' && Object.prototype.toString.call(obj).toLowerCase() == '[object object]' && !obj.length;
     };
 
     //表单参数名称合并
-    service.jsonToFlat = function (jsonObj, basename, outObj) {
+    service.jsonToFlat = function(jsonObj, basename, outObj) {
       if (!outObj) {
         outObj = {};
       }
@@ -50,31 +51,41 @@
     };
 
     //设置后台服务器地址
-    service.setDataServer = function (dataServer) {
+    service.setDataServer = function(dataServer) {
       service.dataServer = dataServer;
     };
 
+    //获取后台服务器地址
+    service.getDataServer = function() {
+      return service.dataServer;
+    };
+
+    //获取后台url
+    service.getServerUrl = function(url) {
+      return service.dataServer + url;
+    };
+
     //设置请求前要执行的function
-    service.setBefore = function (beforeFn) {
+    service.setBefore = function(beforeFn) {
       service.before = beforeFn;
     };
 
     //设置数据回来后要执行的function
-    service.setAfter = function (afterFn) {
+    service.setAfter = function(afterFn) {
       service.after = afterFn;
     };
 
     //设置上传文件请求前要执行的function
-    service.setBeforeFile = function (beforeFn) {
+    service.setBeforeFile = function(beforeFn) {
       service.beforeFile = beforeFn;
     };
 
     //设置上传文件数据回来后要执行的function
-    service.setAfterFile = function (afterFn) {
+    service.setAfterFile = function(afterFn) {
       service.afterFile = afterFn;
     };
 
-    service.send = function (url, postdata, cb) {
+    service.send = function(url, postdata, cb) {
       if (!postdata) {
         postdata = {};
       }
@@ -85,7 +96,7 @@
         url: service.dataServer + url,
         data: postdata
       }).then(
-        function (data, status) {
+        function(data, status) {
           $log.debug(data, status);
           var after = (service.after || angular.noop)(data);
           $log.debug('after的返回值：', after);
@@ -95,19 +106,19 @@
           }
           (cb || angular.noop)(data.data);
         },
-        function (data, status) {
+        function(data, status) {
           $log.error('处理数据发生错误:', data, status);
           (cb || angular.noop)(errorInfo);
         }
       );
     };
 
-    service.sendFile = function (url, files, postdata, cb) {
+    service.sendFile = function(url, files, postdata, cb) {
       if (!postdata) {
         postdata = {};
       }
       (service.beforeFile || angular.noop)(url, files, postdata);
-      $log.debug('文件上传参数：url===>', url, ",files===>", files, ",postdata===>", postdata);
+      $log.debug('文件上传参数：url===>', url, ',files===>', files, ',postdata===>', postdata);
       var form = new FormData();
       //处理表单参数
       postdata = service.jsonToFlat(postdata, '');
@@ -131,7 +142,7 @@
         },
         transformRequest: angular.identity
       }).then(
-        function (data, status) {
+        function(data, status) {
           $log.debug(data, status);
           var after = (service.afterFile || angular.noop)(data);
           $log.debug('after的返回值：', after);
@@ -141,7 +152,7 @@
           }
           (cb || angular.noop)(data.data);
         },
-        function (data, status) {
+        function(data, status) {
           $log.error('处理数据发生错误:', data, status);
           MyLocalDataService.putJson(errorLocalKey, {
             data: data,
@@ -152,37 +163,37 @@
       );
     };
 
-    service.loadLastError = function () {
+    service.loadLastError = function() {
       return MyLocalDataService.getJson(errorLocalKey);
     };
 
-    service.get = function (url, cb) {
+    service.get = function(url, cb) {
       $http({
         method: 'GET',
         url: url
       }).then(
-        function (data, status) {
+        function(data, status) {
           $log.info(data, '====>', status);
           (cb || angular.noop)(null, data.data);
         },
-        function (data, status) {
+        function(data, status) {
           $log.error(data, status);
           (cb || angular.noop)(data, null);
         }
       );
     };
 
-    service.post = function (url, postdata, cb) {
+    service.post = function(url, postdata, cb) {
       $http({
         method: 'POST',
         url: url,
         data: postdata
       }).then(
-        function (data, status) {
+        function(data, status) {
           $log.debug(data, status);
           (cb || angular.noop)(null, data.data);
         },
-        function (data, status) {
+        function(data, status) {
           $log.error(data, status);
           (cb || angular.noop)(data, null);
         }

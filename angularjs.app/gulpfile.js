@@ -22,6 +22,11 @@ function clearBuild(config) {
   });
 }
 
+function libsBuild(config) {
+  console.log(baseDir + config.libs, baseDir + config.distlibs);
+  sync(baseDir + config.libs, baseDir + config.distlibs);
+}
+
 function jslibBuild(config) {
   var libs = [];
   libs.push(baseDir + appconfig.common.nodemodules + 'jquery/dist/jquery.min.js');
@@ -131,6 +136,11 @@ gulp.task('app-jslib', function() {
   return jslibBuild(appconfig.app);
 });
 
+/* huhuiyu的js打包 */
+gulp.task('app-libs', function() {
+  return libsBuild(appconfig.app);
+});
+
 /*css第三方库*/
 gulp.task('app-csslib', function() {
   return csslibBuild(appconfig.app);
@@ -141,7 +151,7 @@ gulp.task('app-fonts', function() {
   return fontsBuild(appconfig.app);
 });
 
-gulp.task('app-lib', ['app-jslib', 'app-csslib', 'app-fonts'], function() {
+gulp.task('app-lib', ['app-jslib', 'app-libs', 'app-csslib', 'app-fonts'], function() {
   console.log('处理第三库依赖');
 });
 
@@ -179,7 +189,7 @@ gulp.task('exclude-test', function() {
 
 /*默认打包任务*/
 gulp.task('default', ['exclude-test', 'app-clear', 'app-lib', 'app-dev'], function() {
-  del.sync(baseDir + appconfig.app.distjs + '*.map');
+  del.sync(baseDir + appconfig.app.dist + '**/*.map');
   console.log('打包任务完成');
 });
 

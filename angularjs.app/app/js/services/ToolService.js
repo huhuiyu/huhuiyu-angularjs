@@ -16,6 +16,7 @@
 
     service.initDataService = function() {
       MyDataService.setDataServer(MyAppConfig.dataservice);
+      $log.debug('dataserver=====>', MyDataService.getDataServer());
 
       function beforeSend(url, senddata) {
         $log.debug('before:', url, senddata);
@@ -43,6 +44,10 @@
       MyDataService.setBeforeFile(beforeSendFile);
       MyDataService.setAfter(afterSend);
       MyDataService.setAfterFile(afterSend);
+    };
+
+    service.getServerToken = function() {
+      return MyLocalDataService.get(servertokenKey);
     };
 
     return service;
