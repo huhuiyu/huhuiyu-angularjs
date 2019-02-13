@@ -11,9 +11,15 @@
 /angularjs.utils/nginx/temp
 /angularjs.utils/nginx/logs
 /angularjs.utils/dist
-/angularjs.app/node_modules
+angularjs.app/node_modules
 angularjs.app/dist/
 angularjs.app/nginx/logs/
 angularjs.app/nginx-path.bat
 angularjs.app/browser.js
 angularjs.app/nginx/temp/
+angularjs.ajaxtool/node_modules
+angularjs.ajaxtool/dist/
+angularjs.ajaxtool/nginx/logs/
+angularjs.ajaxtool/nginx-path.bat
+angularjs.ajaxtool/browser.js
+angularjs.ajaxtool/nginx/temp/

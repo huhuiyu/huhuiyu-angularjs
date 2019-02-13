@@ -1,0 +1,21 @@
+{
+  "common": {
+    "nodemodules": "node_modules/"
+  },
+  "app": {
+    "src": "app/",
+    "js": "app/js/",
+    "css": "app/css/",
+    "html": "app/html/",
+    "libs": "app/libs/",
+    "templates": "app/html/templates/",
+    "images": "app/images/",
+    "dist": "dist/app/",
+    "distlibs": "dist/app/libs/",
+    "distjs": "dist/app/js/",
+    "distcss": "dist/app/css/",
+    "disttemplates": "dist/app/templates/",
+    "distimages": "dist/app/images/",
+    "distfonts": "dist/app/fonts/"
+  }
+}

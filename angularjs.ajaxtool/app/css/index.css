@@ -1,0 +1,9 @@
+/*index页面的css*/
+.index {
+  display: flex;
+  justify-content: center;
+}
+
+.index .div-main {
+  width: 80rem;
+}

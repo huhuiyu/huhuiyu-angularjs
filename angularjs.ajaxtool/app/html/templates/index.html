@@ -1,0 +1,25 @@
+<div class="index h100" ng-controller="IndexCtrl">
+  <div class="div-main">
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">服务器地址</span>
+        <input type="text" ng-model="config.server" class="form-control">
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon">请求url信息</span>
+        <input type="text" ng-model="config.url" class="form-control">
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon">json参数</span>
+        <textarea class="form-control" rows="10" ng-model="config.params"></textarea>
+      </div>
+      <div class="text-center">
+        <span class="btn btn-danger" ng-click="test();">测试</span>
+      </div>
+    </div>
+    <div>
+      {{link}}
+      <pre ng-bind-html="result"></pre>
+    </div>
+  </div>
+</div>
