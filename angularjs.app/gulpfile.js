@@ -134,7 +134,7 @@ gulp.task('app-jslib', function() {
   return jslibBuild(appconfig.app);
 });
 
-/* huhuiyu的js打包 */
+/* 第三方libs目录打包 */
 gulp.task('app-libs', function() {
   return libsBuild(appconfig.app);
 });
