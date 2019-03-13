@@ -37,8 +37,6 @@ function jslibBuild(config) {
   libs.push(baseDir + appconfig.common.nodemodules + 'angular-animate/angular-animate.min.js');
   libs.push(baseDir + appconfig.common.nodemodules + 'angular-cookies/angular-cookies.min.js');
   libs.push(baseDir + appconfig.common.nodemodules + 'angular-messages/angular-messages.min.js');
-  libs.push(baseDir + appconfig.common.libhuhuiyu + 'angularjs.bootstrap.dialog-1.0.0.min.js');
-  libs.push(baseDir + appconfig.common.libhuhuiyu + 'angularjs.utils-1.0.0.min.js');
 
   return gulp
     .src(libs)
