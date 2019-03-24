@@ -81,21 +81,37 @@
     }
   ]);
 
+  var maxFixedCount = 20;
+
   /**
    * 处理fixed效果的指令
    */
   app.directive('fixedTop', [
     '$log',
-    function($log) {
+    '$interval',
+    function($log, $interval) {
       $log.debug('directive fixed-top...');
       return {
         link: function($scope, element, attr) {
-          $log.debug('directive fixed-top element:', element, attr);
-          var height = element.height();
-          $log.debug('directive fixed-top height:', height);
-          angular.element(element[0].nextElementSibling).css('margin-top', height + 'px');
+          var count = 0;
+          function watchTopHeight() {
+            $log.debug('directive fixed-top element:', element, attr);
+            var height = element.height();
+            $log.debug('directive fixed-top height:', height);
+            angular.element(element[0].nextElementSibling).css('margin-top', height + 'px');
+            count++;
+            if (count >= maxFixedCount - 1) {
+              $interval.cancel(timer);
+              timer = null;
+            }
+          }
+          watchTopHeight();
+          var timer = $interval(watchTopHeight, 1000);
 
           $scope.$on('$destroy', function() {
+            if (timer) {
+              $interval.cancel(timer);
+            }
             $log.debug('directive fixed-top destroy...');
           });
         }
@@ -105,16 +121,33 @@
 
   app.directive('fixedBottom', [
     '$log',
-    function($log) {
+    '$interval',
+    function($log, $interval) {
       $log.debug('directive fixed-bottom...');
       return {
         link: function($scope, element, attr) {
-          $log.debug('directive fixed-bottom element:', element);
-          var height = element.height();
-          $log.debug('directive fixed-bottom height:', height);
-          angular.element(element[0].previousElementSibling).css('margin-bottom', height + 'px');
+          var count = 0;
+
+          function watchBottomHeight() {
+            $log.debug('directive fixed-bottom element:', element);
+            var height = element.height();
+            $log.debug('directive fixed-bottom height:', height);
+            angular.element(element[0].previousElementSibling).css('margin-bottom', height + 'px');
+            count++;
+            if (count >= maxFixedCount - 1) {
+              $interval.cancel(timer);
+              timer = null;
+            }
+          }
+
+          watchBottomHeight();
+
+          var timer = $interval(watchBottomHeight, 1000);
 
           $scope.$on('$destroy', function() {
+            if (timer) {
+              $interval.cancel(timer);
+            }
             $log.debug('directive fixed-bottom destroy...');
           });
         }
@@ -127,16 +160,38 @@
    */
   app.directive('fixedToNext', [
     '$log',
-    function($log) {
+    '$interval',
+    function($log, $interval) {
       $log.debug('directive fixed-to-next...');
       return {
         link: function($scope, element, attr) {
-          $log.debug('directive fixed-to-next element:', element, attr);
-          var mytop = element.offset().top;
-          var nexttop = angular.element(element[0].nextElementSibling).offset().top;
-          element.height(nexttop - mytop);
-          $log.debug('directive fixed-to-next top:', mytop, nexttop);
+          var count = 0;
+
+          function watchNextHeight() {
+            $log.debug('directive fixed-to-next element:', element, attr);
+            var mytop = element.offset().top;
+            var nexttop = angular.element(element[0].nextElementSibling).offset().top;
+            // var eleStyle = getComputedStyle(element[0], null);
+            // var marginTop = eleStyle.getPropertyValue('margin-top').replace(/[^0-9.]/g, '');
+            // var marginBottom = eleStyle.getPropertyValue('margin-bottom').replace(/[^0-9.]/g, '');
+            var marginTop = 0;
+            var marginBottom = 0;
+            var minHeight = nexttop - mytop - marginTop - marginBottom;
+            element.css('min-height', minHeight + 'px');
+            $log.debug('directive fixed-to-next top:', mytop, nexttop, marginTop, marginBottom, minHeight);
+            count++;
+            if (count > maxFixedCount) {
+              $interval.cancel(timer);
+              timer = null;
+            }
+          }
+          watchNextHeight();
+          var timer = $interval(watchNextHeight, 1000);
+
           $scope.$on('$destroy', function() {
+            if (timer) {
+              $interval.cancel(timer);
+            }
             $log.debug('directive fixed-to-next destroy...');
           });
         }
