@@ -1,8 +1,8 @@
 (function() {
   var ctrls = angular.module(MyAppConfig.controllers);
-  ctrls.controller('IndexCtrl', ['$scope', '$log', 'MyDataService', 'DialogService', 'MyUtilService', IndexCtrl]);
+  ctrls.controller('IndexCtrl', ['$scope', '$timeout', '$log', 'MyDataService', 'DialogService', 'MyUtilService', IndexCtrl]);
 
-  function IndexCtrl($scope, $log, MyDataService, DialogService, MyUtilService) {
+  function IndexCtrl($scope, $timeout, $log, MyDataService, DialogService, MyUtilService) {
     $log.debug('IndexCtrl init...');
 
     // 处理scope销毁
@@ -23,15 +23,22 @@
       try {
         MyDataService.setDataServer($scope.config.server);
         var jsonData = JSON.parse($scope.config.params);
+        console.log('ahaha', jsonData);
         $scope.link = $scope.config.server + '?' + MyUtilService.jsonToDeeplink(MyDataService.jsonToFlat(jsonData));
         MyDataService.send($scope.config.url, jsonData, function(data) {
           DialogService.hideWait();
           $scope.result = MyUtilService.trustAsHtml(MyUtilService.formatJson(data, true));
         });
       } catch (ex) {
-        DialogService.hideWait();
-        $scope.result = MyUtilService.trustAsHtml(MyUtilService.formatJson(ex, true));
+        $scope.showError(ex);
       }
+    };
+
+    $scope.showError = function(ex) {
+      $scope.result = ex;
+      $timeout(function() {
+        DialogService.hideWait();
+      }, 1);
     };
   }
 })();
