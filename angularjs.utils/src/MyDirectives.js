@@ -95,12 +95,12 @@
         link: function($scope, element, attr) {
           var count = 0;
           function watchTopHeight() {
-            $log.debug('directive fixed-top element:', element, attr);
             var height = element.height();
-            $log.debug('directive fixed-top height:', height);
             angular.element(element[0].nextElementSibling).css('margin-top', height + 'px');
             count++;
             if (count >= maxFixedCount - 1) {
+              $log.debug('directive fixed-top element:', element, attr);
+              $log.debug('directive fixed-top height:', height);
               $interval.cancel(timer);
               timer = null;
             }
@@ -127,14 +127,13 @@
       return {
         link: function($scope, element, attr) {
           var count = 0;
-
           function watchBottomHeight() {
-            $log.debug('directive fixed-bottom element:', element);
             var height = element.height();
-            $log.debug('directive fixed-bottom height:', height);
             angular.element(element[0].previousElementSibling).css('margin-bottom', height + 'px');
             count++;
             if (count >= maxFixedCount - 1) {
+              $log.debug('directive fixed-bottom element:', element);
+              $log.debug('directive fixed-bottom height:', height);
               $interval.cancel(timer);
               timer = null;
             }
@@ -166,9 +165,8 @@
       return {
         link: function($scope, element, attr) {
           var count = 0;
-
+          var cssAttr = 'fill' == attr.fixedToNext ? 'height' : 'min-height';
           function watchNextHeight() {
-            $log.debug('directive fixed-to-next element:', element, attr);
             var mytop = element.offset().top;
             var nexttop = angular.element(element[0].nextElementSibling).offset().top;
             // var eleStyle = getComputedStyle(element[0], null);
@@ -177,10 +175,11 @@
             var marginTop = 0;
             var marginBottom = 0;
             var minHeight = nexttop - mytop - marginTop - marginBottom;
-            element.css('min-height', minHeight + 'px');
-            $log.debug('directive fixed-to-next top:', mytop, nexttop, marginTop, marginBottom, minHeight);
+            element.css(cssAttr, minHeight + 'px');
             count++;
             if (count > maxFixedCount) {
+              $log.debug('directive fixed-to-next element:', element, attr, cssAttr);
+              $log.debug('directive fixed-to-next top:', mytop, nexttop, marginTop, marginBottom, minHeight);
               $interval.cancel(timer);
               timer = null;
             }
@@ -193,6 +192,29 @@
               $interval.cancel(timer);
             }
             $log.debug('directive fixed-to-next destroy...');
+          });
+        }
+      };
+    }
+  ]);
+
+  /**
+   * 高度填充到下一个元素
+   */
+  app.directive('scrollToTop', [
+    '$log',
+    '$timeout',
+    function($log, $timeout) {
+      $log.debug('directive scroll-to-top...');
+      return {
+        link: function($scope, element, attr) {
+          $log.debug('directive scroll-to-top...', element, attr);
+          $timeout(function() {
+            document.body.scrollTop = 0;
+          }, 1);
+
+          $scope.$on('$destroy', function() {
+            $log.debug('directive scroll-to-top destroy...');
           });
         }
       };
