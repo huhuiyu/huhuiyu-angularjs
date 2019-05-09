@@ -52,7 +52,7 @@
         // 执行并重置回调函数
         var cb = alertDialog.closefn;
         alertDialog.closefn = angular.noop;
-        cb();
+        $timeout(cb, 1);
       });
       alertDialog.hasinit = true;
     };
@@ -94,7 +94,7 @@
         // 执行并重置回调函数
         var cb = waitDialog.closefn;
         waitDialog.closefn = angular.noop;
-        cb();
+        $timeout(cb, 1);
       });
       waitDialog.hasinit = true;
     };
@@ -174,7 +174,7 @@
           confirmDialog.choose = 'no';
           confirmDialog.nofn = angular.noop;
           confirmDialog.yesfn = angular.noop;
-          cb();
+          $timeout(cb, 1);
         });
 
         confirmDialog.element.modal('show');
@@ -210,7 +210,7 @@
       customDialog.element.on('hidden.bs.modal', function() {
         var cb = customDialog.closefn;
         customDialog.closefn = angular.noop;
-        cb();
+        $timeout(cb, 1);
       });
       customDialog.hasinit = true;
     };
